@@ -1,1 +1,1254 @@
+\documentclass[UTF8,12pt,a4paper]{ctexart}
 
+% ==================================================
+% 页面设置
+% ==================================================
+\usepackage{geometry}
+\geometry{
+  left=2.2cm,
+  right=2.2cm,
+  top=2.4cm,
+  bottom=2.4cm
+}
+
+% ==================================================
+% 数学宏包
+% ==================================================
+\usepackage{amsmath, amssymb, amsthm, mathtools}
+\usepackage{bm}
+
+% ==================================================
+% 颜色与盒子
+% ==================================================
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{theorems, skins, breakable}
+
+% ==================================================
+% 图片、表格、列表
+% ==================================================
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+\setlist[itemize]{
+  itemsep=2pt,
+  topsep=4pt
+}
+
+\setlist[enumerate]{
+  itemsep=2pt,
+  topsep=4pt
+}
+
+% ==================================================
+% 超链接
+% ==================================================
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  urlcolor=blue!60!black,
+  citecolor=blue!60!black
+}
+
+% ==================================================
+% 页眉页脚
+% ==================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+
+\lhead{}
+\rhead{\leftmark}
+\cfoot{\thepage}
+
+\setlength{\headheight}{15pt}
+
+% ==================================================
+% 公式编号
+% ==================================================
+\numberwithin{equation}{section}
+
+% ==================================================
+% 常用数学命令
+% ==================================================
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\e}{\mathrm{e}}
+\newcommand{\ii}{\mathrm{i}}
+
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\inner}[2]{\left\langle #1, #2 \right\rangle}
+
+% ==================================================
+% 定理类盒子通用样式
+% 正文白底，只保留边框和标题条
+% ==================================================
+\tcbset{
+  theoremStyle/.style={
+    enhanced,
+    breakable,
+    colback=white,
+    fonttitle=\bfseries,
+    coltitle=black,
+    attach boxed title to top left={
+      xshift=3mm,
+      yshift=-2mm
+    },
+    boxed title style={
+      boxrule=0.6pt,
+      arc=1.5mm
+    },
+    separator sign={：},
+    arc=2mm,
+    boxrule=0.8pt,
+    left=2mm,
+    right=2mm,
+    top=2mm,
+    bottom=2mm
+  }
+}
+
+% ==================================================
+% 编号规则
+%
+% 1. 定理类共用编号：
+%    thm, lem, defi, prop, cor, conj
+%    编号格式：section.subsection.counter
+%    例如：1.1.1, 1.1.2, 1.1.3
+%
+% 2. 例题独立编号：
+%    eg
+%    编号格式：section.counter
+%    例如：1.1, 1.2, 2.1
+%
+% 3. 习题全局编号：
+%    ex
+%    编号格式：counter
+%    例如：1, 2, 3
+% ==================================================
+
+% ==================================================
+% 定理类：共用 thm 计数器
+% ==================================================
+
+% 定理：红色
+\newtcbtheorem[number within=subsection]{thm}{Theorem}{
+  theoremStyle,
+  before upper={\gdef\currentProofColor{red!65!black}},
+  colframe=red!65!black,
+  boxed title style={
+    colback=red!10,
+    colframe=red!65!black
+  }
+}{thm}
+
+% 引理：绿色
+\newtcbtheorem[use counter from=thm]{lem}{Lemma}{
+  theoremStyle,
+  before upper={\gdef\currentProofColor{green!45!black}},
+  colframe=green!45!black,
+  boxed title style={
+    colback=green!10,
+    colframe=green!45!black
+  }
+}{lem}
+
+% 定义：青蓝色
+\newtcbtheorem[use counter from=thm]{defi}{Definition}{
+  theoremStyle,
+  before upper={\gdef\currentProofColor{cyan!55!black}},
+  colframe=cyan!55!black,
+  boxed title style={
+    colback=cyan!10,
+    colframe=cyan!55!black
+  }
+}{defi}
+
+% 命题：橙色
+\newtcbtheorem[use counter from=thm]{prop}{Proposition}{
+  theoremStyle,
+  before upper={\gdef\currentProofColor{orange!75!black}},
+  colframe=orange!75!black,
+  boxed title style={
+    colback=orange!12,
+    colframe=orange!75!black
+  }
+}{prop}
+
+% 推论：黄色
+\newtcbtheorem[use counter from=thm]{cor}{Corollary}{
+  theoremStyle,
+  before upper={\gdef\currentProofColor{yellow!45!black}},
+  colframe=yellow!45!black,
+  boxed title style={
+    colback=yellow!18,
+    colframe=yellow!45!black
+  }
+}{cor}
+
+% 猜想：蓝色
+\newtcbtheorem[use counter from=thm]{conj}{Conjecture}{
+  theoremStyle,
+  before upper={\gdef\currentProofColor{blue!65!black}},
+  colframe=blue!65!black,
+  boxed title style={
+    colback=blue!10,
+    colframe=blue!65!black
+  }
+}{conj}
+
+% 例题：蓝色
+\newtcbtheorem[number within=section]{eg}{Example}{
+  theoremStyle,
+  before upper={\gdef\currentProofColor{blue!45!black}},
+  colframe=blue!45!black,
+  boxed title style={
+    colback=blue!10,
+    colframe=blue!45!black
+  }
+}{eg}
+
+% 习题：紫色
+\newtcbtheorem{ex}{Exercise}{
+  theoremStyle,
+  before upper={\gdef\currentProofColor{purple!45!black}},
+  colframe=purple!45!black,
+  boxed title style={
+    colback=purple!10,
+    colframe=purple!45!black
+  }
+}{ex}
+
+% ==================================================
+% 普通浅色背景盒子
+% 不编号，适合笔记、重点、方法、易错点、总结
+% ==================================================
+
+% 普通说明框
+\newtcolorbox{plainBox}{
+  enhanced,
+  breakable,
+  colback=gray!6,
+  colframe=gray!45,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=2mm,
+  right=2mm,
+  top=1.5mm,
+  bottom=1.5mm
+}
+
+% 重点框
+\newtcolorbox{keyBox}{
+  enhanced,
+  breakable,
+  colback=blue!4,
+  colframe=blue!35,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=2mm,
+  right=2mm,
+  top=1.5mm,
+  bottom=1.5mm
+}
+
+% 方法框
+\newtcolorbox{methodBox}{
+  enhanced,
+  breakable,
+  colback=green!4,
+  colframe=green!35!black,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=2mm,
+  right=2mm,
+  top=1.5mm,
+  bottom=1.5mm
+}
+
+% 易错框
+\newtcolorbox{mistakeBox}{
+  enhanced,
+  breakable,
+  colback=red!4,
+  colframe=red!35,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=2mm,
+  right=2mm,
+  top=1.5mm,
+  bottom=1.5mm
+}
+
+% 总结框
+\newtcolorbox{summaryBox}{
+  enhanced,
+  breakable,
+  colback=yellow!8,
+  colframe=yellow!45!black,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=2mm,
+  right=2mm,
+  top=1.5mm,
+  bottom=1.5mm
+}
+
+% 可自定义标题的普通盒子
+\newtcolorbox{titleBox}[1]{
+  enhanced,
+  breakable,
+  colback=gray!5,
+  colframe=gray!50,
+  title=#1,
+  fonttitle=\bfseries,
+  coltitle=black,
+  colbacktitle=gray!18,
+  boxrule=0.6pt,
+  arc=2mm,
+  left=2mm,
+  right=2mm,
+  top=1.5mm,
+  bottom=1.5mm
+}
+% ==================================================
+% 自定义证明环境
+% Proof 为斜体，结尾方块颜色跟随上一个盒子
+% ==================================================
+
+% 默认证明结束符颜色
+\newcommand{\currentProofColor}{black}
+
+\makeatletter
+\renewenvironment{proof}[1][Proof]{%
+  \par
+  \begingroup
+  \edef\proofQEDColor{\currentProofColor}%
+  \renewcommand{\qedsymbol}{\textcolor{\proofQEDColor}{$\blacksquare$}}%
+  \pushQED{\qed}%
+  \normalfont
+  \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\bfseries\itshape #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED
+  \endtrivlist
+  \@endpefalse
+  \endgroup
+}
+\makeatother
+% ==================================================
+% 英文化标题
+% ==================================================
+\renewcommand{\contentsname}{Contents}
+\newenvironment{myabstract}{
+  \begin{center}
+    {\Large\bfseries Abstract\par}
+    \vspace{0.8em}
+  \end{center}
+  \begin{quote}
+  \normalsize
+}{
+  \end{quote}
+  \vspace{1em}
+}
+
+% ==================================================
+% 标题信息
+% ==================================================
+\title{\textbf{Proof of Weierstrass Extreme Value Theorem (Via General Topology)}}
+\author{StarbryOwO}
+\date{June 2026}
+
+% ==================================================
+% 正文开始
+% ==================================================
+\begin{document}
+
+\maketitle
+
+\begin{myabstract}
+  I have seen many proofs of the Extreme Value Theorem, but few of them are accessible to beginners in mathematics, especially undergraduate students. Some proofs are technically complicated, while others skip too many intermediate steps.
+
+For this reason, I wrote this note on the proof of the Weierstrass Extreme Value Theorem using general topology. My goal is to present a complete, clear, and relatively simple proof of the theorem. This note begins with the basic definitions of topology and proves all the theorems that will be used later.
+
+\end{myabstract}
+
+\tableofcontents
+\newpage
+
+% ==================================================
+% 示例内容
+% ==================================================
+
+\section{Weierstrass Extreme Value Theorem}
+\subsection{Preliminary of the proof}
+
+\begin{defi}{Topological Space}{topo-space}
+Let $X$ be a set. A family of subsets $\mathcal{T} \subset \mathcal{P}(X)$ is called a \textbf{topology} on $X$ if it satisfies the following conditions:
+\begin{itemize}
+  \item $\emptyset \in \mathcal{T}$ and $X \in \mathcal{T}$.
+  \item The union of any collection of sets in $\mathcal{T}$ also belongs to $\mathcal{T}$.
+  \item The intersection of any finite number of sets in $\mathcal{T}$ also belongs to $\mathcal{T}$.
+\end{itemize}
+The pair $(X, \mathcal{T})$ is then called a \textbf{topological space}, and the elements of $\mathcal{T}$ are called \textbf{open sets}.
+\end{defi}
+
+\begin{defi}{Continuous Function in Topological Space}{cont-func}
+Let $X$ and $Y$ be topological spaces. A map $f: X \to Y$ is called \textbf{continuous} if for every open set $V \subset Y$, its preimage
+$$
+f^{-1}(V) := \{x \in X \mid f(x) \in V\}
+$$
+is an open set in $X$.
+\end{defi}
+
+\begin{defi}{Open Cover}{open-cover}
+Let $X$ be a topological space and let $A \subset X$. A family of open sets $\{U_\alpha\}_{\alpha \in I}$ is called an \textbf{open cover} of $A$ if 
+$$
+A \subset \bigcup_{\alpha \in I} U_\alpha.
+$$
+\end{defi}
+
+\begin{defi}{Compact Set}{compact-set}
+Let $X$ be a topological space and let $K \subset X$. The subset $K$ is said to be \textbf{compact} if every open cover of $K$ has a finite subcover. 
+
+More explicitly, whenever 
+$$
+K \subset \bigcup_{\alpha \in I} U_\alpha
+$$
+where each $U_\alpha$ is an open set, there exist finitely many indices $\alpha_1, \dots, \alpha_n \in I$ such that
+$$
+K \subset U_{\alpha_1} \cup \cdots \cup U_{\alpha_n}.
+$$
+\end{defi}
+
+\begin{lem}{Image of a finite preimage cover}{image-of-finite-preimage-cover}
+Let \(f:X\to Y\) be a map, let \(K\subset X\), and let
+\(V_1,\dots,V_n\subset Y\). If
+$$
+K\subset f^{-1}(V_1)\cup\cdots\cup f^{-1}(V_n),
+$$
+then
+$$
+f(K)\subset V_1\cup\cdots\cup V_n.
+$$
+\end{lem}
+
+\begin{proof}
+Take any \(y\in f(K)\). By the definition of image, there exists
+\(x\in K\) such that
+$$
+y=f(x).
+$$
+
+Since
+$$
+K\subset f^{-1}(V_1)\cup\cdots\cup f^{-1}(V_n),
+$$
+and \(x\in K\), we have
+$$
+x\in f^{-1}(V_1)\cup\cdots\cup f^{-1}(V_n).
+$$
+
+Hence there exists some \(i\in\{1,\dots,n\}\) such that
+$$
+x\in f^{-1}(V_i).
+$$
+
+By the definition of inverse image,
+$$
+x\in f^{-1}(V_i)
+\quad\Longleftrightarrow\quad
+f(x)\in V_i.
+$$
+
+Therefore
+$$
+y=f(x)\in V_i.
+$$
+
+Thus
+$$
+y\in V_1\cup\cdots\cup V_n.
+$$
+
+Since \(y\in f(K)\) was arbitrary, we conclude that
+$$
+f(K)\subset V_1\cup\cdots\cup V_n.
+$$
+\end{proof}
+
+\begin{prop}{Continuous maps preserve compactness}{continuous-image-compact}
+Let \(K\) be a compact topological space, and let \(f:K\to Y\) be continuous.
+Then
+$$
+f(K)\subset Y
+$$
+is compact.
+\end{prop}
+
+\begin{proof}
+Let \(\{V_\alpha\}_{\alpha\in I}\) be an open cover of \(f(K)\). Since \(f\) is continuous, for every \(\alpha\in I\), the inverse image
+$$
+f^{-1}(V_\alpha)\subset K
+$$
+is open in \(K\).
+
+We claim that \(\{f^{-1}(V_\alpha)\}_{\alpha\in I}\) is an open cover of \(K\). Indeed, let \(x\in K\). Then \(f(x)\in f(K)\). Since \(\{V_\alpha\}_{\alpha\in I}\) covers \(f(K)\), there exists some \(\alpha\in I\) such that
+$$
+f(x)\in V_\alpha.
+$$
+
+Hence
+$$
+x\in f^{-1}(V_\alpha).
+$$
+
+Therefore,
+$$
+K\subset \bigcup_{\alpha\in I} f^{-1}(V_\alpha).
+$$
+
+Thus \(\{f^{-1}(V_\alpha)\}_{\alpha\in I}\) is an open cover of \(K\). Since \(K\) is compact, there exist finitely many indices
+$$
+\alpha_1,\dots,\alpha_n\in I
+$$
+such that
+$$
+K\subset f^{-1}(V_{\alpha_1})\cup\cdots\cup f^{-1}(V_{\alpha_n}).
+$$
+
+By Lemma~\ref{lem:image-of-finite-preimage-cover}, we have
+$$
+f(K)\subset V_{\alpha_1}\cup\cdots\cup V_{\alpha_n}.
+$$
+
+Hence every open cover of \(f(K)\) has a finite subcover. Therefore, \(f(K)\) is compact.
+\end{proof}
+
+\begin{prop}{Compact subsets of $\mathbb{R}^n$ are bounded}{compact-subset-rn-bounded}
+Let $K\subset\mathbb{R}^n$ be compact. Then $K$ is bounded.
+\end{prop}
+
+\begin{proof}
+Consider the collection of open balls
+$$
+\{B_m(0)\mid m\in\mathbb{N}\}.
+$$
+
+Since
+$$
+\mathbb{R}^n=\bigcup_{m=1}^{\infty}B_m(0),
+$$
+we have
+$$
+K\subset \bigcup_{m=1}^{\infty}B_m(0).
+$$
+
+Thus $\{B_m(0)\}_{m\in\mathbb{N}}$ is an open cover of $K$.
+
+Because $K$ is compact, there exist finitely many natural numbers
+$$
+m_1,\dots,m_r
+$$
+such that
+$$
+K\subset B_{m_1}(0)\cup\cdots\cup B_{m_r}(0).
+$$
+
+Let
+$$
+M=\max\{m_1,\dots,m_r\}.
+$$
+
+Then for each $i=1,\dots,r$,
+$$
+B_{m_i}(0)\subset B_M(0).
+$$
+
+Therefore,
+$$
+K\subset B_M(0).
+$$
+
+Hence $K$ is bounded.
+\end{proof}
+
+\begin{cor}{Compact subsets of $\mathbb{R}$ are bounded*}{compact-subset-real-bounded}
+Let $A\subset\mathbb{R}$ be compact. Then $A$ is bounded.
+\end{cor}
+
+\begin{prop}{Compact subsets of $\mathbb{R}^n$ are closed}{compact-subset-rn-closed}
+Let $K\subset\mathbb{R}^n$ be compact. Then $K$ is closed.
+\end{prop}
+
+\begin{proof}
+To prove that $K$ is closed, it suffices to show that $\mathbb{R}^n\setminus K$ is open.
+
+Take any
+$$
+y\in \mathbb{R}^n\setminus K.
+$$
+
+We want to find a radius $\rho>0$ such that
+$$
+B_\rho(y)\subset \mathbb{R}^n\setminus K.
+$$
+
+For each $x\in K$, since $x\neq y$, define
+$$
+r_x=\frac{\|x-y\|}{3}>0.
+$$
+
+Let
+$$
+U_x=B_{r_x}(x)
+$$
+and
+$$
+V_x=B_{r_x}(y).
+$$
+
+We first show that
+$$
+U_x\cap V_x=\varnothing.
+$$
+
+Suppose, for contradiction, that there exists $z\in U_x\cap V_x$. Then
+$$
+\|x-z\|<r_x
+$$
+and
+$$
+\|z-y\|<r_x.
+$$
+
+By the triangle inequality,
+$$
+\|x-y\|\le \|x-z\|+\|z-y\|<2r_x=\frac{2}{3}\|x-y\|,
+$$
+which is impossible. Therefore,
+$$
+U_x\cap V_x=\varnothing.
+$$
+
+Now the collection
+$$
+\{U_x\}_{x\in K}
+$$
+is an open cover of $K$, since every $x\in K$ belongs to its own neighborhood $U_x$.
+
+Since $K$ is compact, there exist finitely many points
+$$
+x_1,\dots,x_m\in K
+$$
+such that
+$$
+K\subset U_{x_1}\cup\cdots\cup U_{x_m}.
+$$
+
+Define
+$$
+V=V_{x_1}\cap\cdots\cap V_{x_m}.
+$$
+
+Since $V$ is a finite intersection of open sets, it is open. Also, $y\in V$.
+
+We claim that
+$$
+V\cap K=\varnothing.
+$$
+
+Suppose, for contradiction, that there exists $z\in V\cap K$. Since $z\in K$ and
+
+$$
+K\subset U_{x_1}\cup\cdots\cup U_{x_m},
+$$
+there exists some $i\in\{1,\dots,m\}$ such that
+$$
+z\in U_{x_i}.
+$$
+
+On the other hand, since $z\in V$ and $V\subset V_{x_i}$, we also have
+$$
+z\in V_{x_i}.
+$$
+
+Thus
+$$
+z\in U_{x_i}\cap V_{x_i},
+$$
+which contradicts
+$$
+U_{x_i}\cap V_{x_i}=\varnothing.
+$$
+
+Therefore,
+$$
+V\cap K=\varnothing.
+$$
+
+Since $V$ is an open set containing $y$, there exists $\rho>0$ such that
+$$
+B_\rho(y)\subset V.
+$$
+
+Hence
+$$
+B_\rho(y)\subset V\subset \mathbb{R}^n\setminus K.
+$$
+
+This shows that every point of $\mathbb{R}^n\setminus K$ is an interior point of $\mathbb{R}^n\setminus K$. Therefore, $\mathbb{R}^n\setminus K$ is open, and consequently $K$ is closed.
+\end{proof}
+
+\begin{cor}{Compact subsets of $\mathbb{R}$ are closed*}{compact-subset-real-closed}
+Let $A\subset\mathbb{R}$ be compact. Then $A$ is closed.
+\end{cor}
+
+\begin{plainBox}
+*To prove the \textbf{Extreme Value Theorem}, \ref{cor:compact-subset-real-bounded} and \ref{cor:compact-subset-real-closed} can be substituted with the \textbf{Heine-Borel Theorem} in the case $n=1$, which we will explore later in the appendix. By the way, Propositions~\ref{prop:compact-subset-rn-bounded} and~\ref{prop:compact-subset-rn-closed} will also be useful later in the proof of the \textbf{Heine--Borel Theorem}.
+\end{plainBox}
+
+\begin{prop}{Non-empty compact subsets of $\mathbb{R}$ have extrema}{compact-subset-real-has-extrema}
+If $A \subset \mathbb{R}$ is non-empty and compact, then there exist $M, m \in A$ such that 
+$$
+M \ge a \quad \text{and} \quad m \le a \quad \text{for all } a \in A.
+$$
+In other words, $A$ has a maximum and a minimum.
+\end{prop}
+
+\begin{proof}
+Without loss of generality, we only prove the existence of the maximum, as the proof for the minimum is completely analogous.
+
+From \ref{cor:compact-subset-real-bounded} and \ref{cor:compact-subset-real-closed}, we know that:
+\begin{enumerate}
+    \item $A$ is compact $\implies A$ is bounded.
+    \item $A$ is compact $\implies A$ is closed.
+\end{enumerate}
+
+Since $A$ is non-empty and bounded, the Supremum Axiom implies that the supremum of $A$ exists. Let
+$$
+M = \sup A.
+$$
+
+By the definition of the supremum, we have:
+\begin{itemize}
+    \item $a \le M$ for all $a \in A$.
+    \item For every $\varepsilon > 0$, there exists some $a_\varepsilon \in A$ such that $M - \varepsilon < a_\varepsilon \le M$.
+\end{itemize}
+
+We now show that $M \in A$. Suppose for contradiction that $M \notin A$. Since $A$ is a closed set, its complement $\mathbb{R} \setminus A$ is open. Since $M \in \mathbb{R} \setminus A$, there exists an $\varepsilon > 0$ such that 
+$$
+(M - \varepsilon, M + \varepsilon) \subset \mathbb{R} \setminus A.
+$$
+
+However, because $M = \sup A$, for this specific $\varepsilon > 0$, there must exist an $a_\varepsilon \in A$ satisfying
+$$
+M - \varepsilon < a_\varepsilon \le M.
+$$
+
+This implies that $a_\varepsilon \in (M - \varepsilon, M + \varepsilon)$. But this directly contradicts the fact that $(M - \varepsilon, M + \varepsilon) \subset \mathbb{R} \setminus A$, as $a_\varepsilon$ cannot belong to both $A$ and its complement.
+
+Therefore, the assumption $M \notin A$ must be false, so $M \in A$. This completes the proof that $M$ is the maximum element of $A$.
+\end{proof}
+\subsection{Final proof}
+We now have sufficient lemmas to prove the Extreme Value Theorem.
+\begin{thm}{Extreme Value Theorem (Generalized Version)}{extreme-value-general}
+Let $K$ be a non-empty compact topological space, and let $f: K \to \mathbb{R}$ be a continuous function, where $\mathbb{R}$ is endowed with the standard topology. Then there exist $x_{\max}, x_{\min} \in K$ such that
+$$
+f(x_{\max}) \ge f(x) \quad \text{and} \quad f(x_{\min}) \le f(x) \quad \text{for all } x \in K.$$
+In other words, a continuous function on a non-empty compact set always attains its maximum and minimum values.
+\end{thm}
+
+\begin{proof}
+Let $K$ be a non-empty compact space and let $f: K \to \mathbb{R}$ be a continuous function. Define the image of $K$ under $f$ as
+$$
+A = f(K) = \{f(x) \mid x \in K\} \subset \mathbb{R}.
+$$
+
+Since $K$ is non-empty, its image $A$ is also non-empty. 
+
+By \ref{prop:continuous-image-compact} (Continuous maps preserve compactness), we have:
+$$
+K \text{ is compact} \quad \text{and} \quad f \text{ is continuous} \implies f(K) \text{ is compact}.
+$$
+
+Therefore, $A \subset \mathbb{R}$ is a non-empty compact set. 
+
+According to \ref{prop:compact-subset-real-has-extrema}, any non-empty compact subset of $\mathbb{R}$ contains both a maximum and a minimum element. Thus, we can define
+$$
+M = \max A \quad \text{and} \quad m = \min A.
+$$
+
+Since $M \in A = f(K)$, by the definition of the image of a set, there must exist some point $x_{\max} \in K$ such that
+$$
+f(x_{\max}) = M.
+$$
+
+Furthermore, because $M$ is the maximum element of $A$, for any $x \in K$, we have $f(x) \in A$, which implies
+$$
+f(x) \le M = f(x_{\max}).
+$$
+
+Hence,
+$$
+f(x_{\max}) \ge f(x) \quad \text{for all } x \in K,
+$$
+which demonstrates that $f$ attains its maximum value on $K$.
+
+Similarly, since $m \in A = f(K)$, there exists some point $x_{\min} \in K$ such that
+$$
+f(x_{\min}) = m.
+$$
+
+Since $m$ is the minimum element of $A$, it follows that for any $x \in K$,
+$$
+m \le f(x),
+$$
+which yields
+$$
+f(x_{\min}) \le f(x) \quad \text{for all } x \in K.
+$$
+
+This demonstrates that $f$ also attains its minimum value on $K$, completing the proof.
+\end{proof}
+
+We have proved the EVT for topological spaces. The last thing we need to prove to complete these notes is that Euclidean spaces are topological spaces.
+
+\begin{lem}{Euclidean spaces are topological spaces}{euclidean-topological}
+Let $\mathbb{R}^n$ be endowed with the Euclidean metric 
+$$
+d(x,y) = \|x-y\| = \sqrt{(x_1-y_1)^2 + \cdots + (x_n-y_n)^2}.
+$$
+For any $x \in \mathbb{R}^n$ and $r > 0$, define the \textbf{open ball} as
+$$
+B_r(x) = \{y \in \mathbb{R}^n \mid d(x,y) < r\}.
+$$
+A subset $U \subset \mathbb{R}^n$ is said to be \textbf{open} if $\forall x \in U \, \exists r>0$ such that $B_r(x) \subset U$. Let
+$$
+\mathcal{T} = \{U \subset \mathbb{R}^n \mid U \text{ is open}\}.
+$$
+Then $(\mathbb{R}^n, \mathcal{T})$ forms a topological space.
+\end{lem}
+
+\begin{proof}
+To prove that $\mathcal{T}$ is a valid topology on $\mathbb{R}^n$, we need to verify the three fundamental topological axioms.
+
+\medskip
+\noindent \textbf{1. The empty set $\varnothing$ and the entire space $\mathbb{R}^n$ are open}
+
+First, we show that $\varnothing$ is open. By definition, a set is open if for every $x \in \varnothing$, there exists an $r > 0$ such that $B_r(x) \subset \varnothing$. Since the empty set contains no elements, this condition holds vacuously. Thus, $\varnothing \in \mathcal{T}$.
+
+Second, we show that $\mathbb{R}^n$ is open. Take any $x \in \mathbb{R}^n$. By choosing $r = 1$, it is clear by definition that $B_1(x) \subset \mathbb{R}^n$. Therefore, $\mathbb{R}^n \in \mathcal{T}$.
+
+\medskip
+\noindent \textbf{2. Arbitrary unions of open sets are open}
+
+Let $\{U_\alpha\}_{\alpha \in I}$ be a collection of open sets, meaning that $U_\alpha \in \mathcal{T}$ for all $\alpha \in I$. Define their union as
+$$
+U = \bigcup_{\alpha \in I} U_\alpha.
+$$
+
+We aim to prove that $U$ is open. Take any $x \in U$. By the definition of the union of sets, there must exist some index $\alpha_0 \in I$ such that $x \in U_{\alpha_0}$. 
+
+Since $U_{\alpha_0}$ is an open set, there exists a radius $r > 0$ satisfying $B_r(x) \subset U_{\alpha_0}$. Furthermore, because $U_{\alpha_0}$ is a subset of the total union, we have $U_{\alpha_0} \subset U$. It follows immediately that $B_r(x) \subset U$. Consequently, $U$ is open, which means
+$$
+\bigcup_{\alpha \in I} U_\alpha \in \mathcal{T}.
+$$
+
+Thus, the arbitrary union of open sets remains open.
+
+\medskip
+\noindent \textbf{3. Finite intersections of open sets are open}
+
+Let $U_1, \dots, U_m \in \mathcal{T}$ be a finite collection of open sets, and let their intersection be
+$$
+U = U_1 \cap \cdots \cap U_m.
+$$
+
+We proceed to prove that $U$ is open. Take any $x \in U$. By the definition of intersection, $x \in U_i$ holds for every $i = 1, \dots, m$.
+
+Since each $U_i$ is an open set, for each index $i$, there exists a corresponding radius $r_i > 0$ such that $B_{r_i}(x) \subset U_i$. Let us define
+$$
+r = \min\{r_1, \dots, r_m\}.
+$$
+Since $r_1, \dots, r_m$ is a finite collection of strictly positive numbers, their minimum must also be strictly positive, i.e., $r > 0$. 
+
+Moreover, since $r \le r_i$ for each $i$, the open balls satisfy the inclusion $B_r(x) \subset B_{r_i}(x)$. Combining this with our previous step, we obtain $B_r(x) \subset B_{r_i}(x) \subset U_i$ for every $i = 1, \dots, m$. This implies that the ball is contained in the intersection of all these sets:
+$$
+B_r(x) \subset U_1 \cap \cdots \cap U_m = U.
+$$
+
+Hence, $U$ is open, which demonstrates that $U_1 \cap \cdots \cap U_m \in \mathcal{T}$. Thus, the finite intersection of open sets remains open.
+
+\medskip
+\noindent \textbf{Conclusion}
+
+We have verified that $\varnothing, \mathbb{R}^n \in \mathcal{T}$, $\mathcal{T}$ is closed under arbitrary unions, and $\mathcal{T}$ is closed under finite intersections. Therefore, $\mathcal{T}$ is a topology on $\mathbb{R}^n$ and $(\mathbb{R}^n, \mathcal{T}) \text{ is a topological space.}$
+\end{proof}
+
+\begin{cor}{Extreme Value Theorem in $\mathbb{R}^n$}{extreme-value-rn}
+Let $K\subset\mathbb{R}^n$ be a non-empty compact set and $f: K \to \mathbb{R}$ be a continuous function. Then there exist $x_{\max}, x_{\min} \in K$ such that
+$$
+f(x_{\max}) \ge f(x) \quad \text{and} \quad f(x_{\min}) \le f(x) \quad \text{for all } x \in K.$$
+In other words, a continuous function on a non-empty compact set always attains its maximum and minimum values.
+\end{cor}
+
+We finally proved Extreme Value Theorem in $\mathbb{R}^n$.
+
+\subsection{Logic Chain of the proof of the EVT}
+$$
+\boxed{
+\begin{gathered}
+K \text{ is nonempty and compact, and } f:K\to \mathbb{R} \text{ is continuous}
+\\[0.6em]
+\Downarrow\rlap{\quad\ref{prop:continuous-image-compact}}
+\\[0.6em]
+f(K)\subset \mathbb{R} \text{ is nonempty and compact}
+\\[0.6em]
+\Downarrow\rlap{\quad\ref{cor:compact-subset-real-bounded}\text{ and }\ref{cor:compact-subset-real-closed}}
+\\[0.6em]
+f(K) \text{ is nonempty, closed, and bounded}
+\\[0.6em]
+\Downarrow
+\\[0.6em]
+\sup f(K) \text{ and } \inf f(K) \text{ exist}
+\\[0.6em]
+\Downarrow
+\\[0.6em]
+\sup f(K)\in f(K) \text{ and } \inf f(K)\in f(K)
+\\[0.6em]
+\Downarrow\rlap{\quad\ref{prop:compact-subset-real-has-extrema}}
+\\[0.6em]
+\max f(K) \text{ and } \min f(K) \text{ exist}
+\\[0.6em]
+\Downarrow
+\\[0.6em]
+f \text{ attains its maximum and minimum on } K
+\end{gathered}
+}
+$$
+\newpage
+\appendix
+
+\section{Appendix}
+
+\subsection{Heine-Borel Theorem}
+
+This important theorem connects topology and analysis. We should know how to prove it and how to use it.
+
+\begin{lem}{Nested Intervals Theorem}{nested-intervals}
+Let $I_k = [a_k, b_k] \subset \mathbb{R}$ be a sequence of closed and bounded intervals satisfying
+$$
+I_1 \supset I_2 \supset I_3 \supset \cdots
+$$
+and $\lim_{k \to \infty} (b_k - a_k) = 0$. Then there exists a unique $c \in \mathbb{R}$ such that
+$$
+c \in \bigcap_{k=1}^\infty I_k.
+$$
+\end{lem}
+
+\begin{proof}
+Since the intervals are nested, the sequence of left endpoints is monotonically increasing:
+$$
+a_1 \le a_2 \le a_3 \le \cdots
+$$
+and the sequence of right endpoints is monotonically decreasing:
+$$
+b_1 \ge b_2 \ge b_3 \ge \cdots
+$$
+
+Let $A = \{a_k \mid k \in \mathbb{N}\}$ be the set of all left endpoints. The set $A$ is non-empty and bounded above by, for instance, $b_1$. By the Supremum Axiom (Completeness Axiom) of real numbers, the supremum of $A$ exists. Let
+$$
+c = \sup A.
+$$
+
+By the definition of the supremum, it is immediate that $a_k \le c$ for all $k \in \mathbb{N}$. On the other hand, let us fix an arbitrary index $k$. Due to the nested nature of the intervals, for any index $j$, we always have $a_j \le b_k$. This implies that $b_k$ is an upper bound for the set $A$. Since $c = \sup A$ is the \emph{least} upper bound, it follows that $c \le b_k$. 
+
+Combining these two inequalities, we obtain:
+$$
+a_k \le c \le b_k
+$$
+for all $k \in \mathbb{N}$, which means that $c \in I_k$ for every $k$. Therefore, we conclude that
+$$
+c \in \bigcap_{k=1}^\infty I_k.
+$$
+
+\medskip
+
+To establish uniqueness, suppose there is another point $d$ that also belongs to the intersection, meaning $d \in I_k$ for all $k \in \mathbb{N}$. Since both $c$ and $d$ lie within the interval $I_k = [a_k, b_k]$, the distance between them cannot exceed the length of the interval:
+$$
+|c - d| \le b_k - a_k.
+$$
+
+Taking the limit as $k \to \infty$, and since we are given that $b_k - a_k \to 0$, it follows from the Squeeze Theorem that $|c - d| = 0$. Therefore, $c = d$, which completes the proof of uniqueness.
+\end{proof}
+
+\begin{lem}{Closed boxes in $\mathbb{R}^n$ are compact}{closed-box-compact}
+Let
+$$
+Q = [a_1,b_1]\times \cdots \times [a_n,b_n] \subset \mathbb{R}^n
+$$
+be a closed box. Then $Q$ is compact.
+\end{lem}
+
+\begin{proof}
+Let $\{U_\alpha\}_{\alpha\in I}$ be an open cover of $Q$. We want to prove that this open cover has a finite subcover.
+
+Suppose, for contradiction, that $\{U_\alpha\}_{\alpha\in I}$ has no finite subcover of $Q$.
+
+We divide each interval $[a_i,b_i]$ into two closed intervals of equal length. In this way, the closed box $Q$ is divided into $2^n$ smaller closed boxes.
+
+If each of these $2^n$ smaller closed boxes could be covered by finitely many sets from $\{U_\alpha\}_{\alpha\in I}$, then by taking the union of these finitely many finite subcovers, the whole box $Q$ would have a finite subcover. This contradicts our assumption.
+
+Hence, at least one of these smaller closed boxes cannot be covered by finitely many sets from $\{U_\alpha\}_{\alpha\in I}$. Denote this box by $Q_1$.
+
+Now repeat the same argument for $Q_1$. By dividing $Q_1$ into $2^n$ smaller closed boxes, at least one of them has no finite subcover. Denote it by $Q_2$.
+
+Continuing this process, we obtain a nested sequence of closed boxes
+$$
+Q \supset Q_1 \supset Q_2 \supset \cdots
+$$
+such that each $Q_k$ cannot be covered by finitely many sets from the original open cover $\{U_\alpha\}_{\alpha\in I}$.
+
+Write
+$$
+Q_k = I_{k,1}\times \cdots \times I_{k,n},
+$$
+where each $I_{k,j}$ is a closed interval in $\mathbb{R}$.
+
+For each fixed coordinate $j$, the intervals satisfy
+$$
+I_{1,j} \supset I_{2,j} \supset I_{3,j} \supset \cdots,
+$$
+and their lengths tend to $0$ because each step halves the side lengths.
+
+By Lemma~\ref{lem:nested-intervals}, for each $j=1,\dots,n$, there exists a unique point
+$$
+x_j \in \bigcap_{k=1}^\infty I_{k,j}.
+$$
+
+Define
+$$
+x = (x_1,\dots,x_n).
+$$
+
+Then
+$$
+x\in Q_k
+$$
+for every $k\in\mathbb{N}$.
+
+Since $\{U_\alpha\}_{\alpha\in I}$ covers $Q$, and $x\in Q$, there exists some $\alpha_0\in I$ such that
+$$
+x\in U_{\alpha_0}.
+$$
+
+Because $U_{\alpha_0}$ is open, there exists $r>0$ such that
+$$
+B_r(x)\subset U_{\alpha_0}.
+$$
+
+Now observe that the diameter of $Q_k$ tends to $0$. Indeed, if
+$$
+L = \max\{b_1-a_1,\dots,b_n-a_n\},
+$$
+then each side length of $Q_k$ is at most $L/2^k$. Hence, for any $u,v\in Q_k$, each coordinate difference satisfies
+$$
+|u_j-v_j|\le \frac{L}{2^k},\qquad j=1,\dots,n.
+$$
+By the Pythagorean Theorem,
+$$
+\|u-v\|
+=
+\sqrt{\sum_{j=1}^n |u_j-v_j|^2}
+\le
+\sqrt{n}\frac{L}{2^k}.
+$$
+Therefore,
+$$
+\operatorname{diam}(Q_k) \le \sqrt{n}\frac{L}{2^k}\to 0.
+$$
+
+Therefore, there exists some sufficiently large $k$ such that
+$$
+\operatorname{diam}(Q_k)<r.
+$$
+
+Since $x\in Q_k$, for every $y\in Q_k$ we have
+$$
+\|y-x\|\le \operatorname{diam}(Q_k)<r.
+$$
+
+Thus
+$$
+Q_k\subset B_r(x)\subset U_{\alpha_0}.
+$$
+
+This means that $Q_k$ can be covered by the single open set $U_{\alpha_0}$, and hence $Q_k$ has a finite subcover. This contradicts the construction of $Q_k$.
+
+Therefore, our assumption was false. Hence every open cover of $Q$ has a finite subcover, so $Q$ is compact.
+\end{proof}
+
+\begin{prop}{Closed subsets of compact sets are compact}{closed-subset-compact}
+Let $C\subset\mathbb{R}^n$ be compact, and let $F\subset C$ be closed in $\mathbb{R}^n$. Then $F$ is compact.
+\end{prop}
+
+\begin{proof}
+Let $\{U_\alpha\}_{\alpha\in I}$ be an open cover of $F$. Thus,
+$$
+F\subset \bigcup_{\alpha\in I}U_\alpha.
+$$
+
+Since $F$ is closed in $\mathbb{R}^n$, its complement
+$$
+\mathbb{R}^n\setminus F
+$$
+is open.
+
+Now consider the collection
+$$
+\{U_\alpha\}_{\alpha\in I}\cup\{\mathbb{R}^n\setminus F\}.
+$$
+
+We claim that this is an open cover of $C$. Indeed, if $x\in C$, then either $x\in F$ or $x\notin F$.
+
+If $x\in F$, then $x$ belongs to some $U_\alpha$ because $\{U_\alpha\}_{\alpha\in I}$ covers $F$. If $x\notin F$, then
+$$
+x\in \mathbb{R}^n\setminus F.
+$$
+
+Therefore,
+$$
+C\subset \left(\bigcup_{\alpha\in I}U_\alpha\right)\cup(\mathbb{R}^n\setminus F).
+$$
+
+Since $C$ is compact, there exist finitely many indices
+$$
+\alpha_1,\dots,\alpha_m\in I
+$$
+such that
+$$
+C\subset U_{\alpha_1}\cup\cdots\cup U_{\alpha_m}\cup(\mathbb{R}^n\setminus F).
+$$
+
+Restricting this inclusion to $F$, we get
+$$
+F\subset U_{\alpha_1}\cup\cdots\cup U_{\alpha_m},
+$$
+because
+$$
+F\cap(\mathbb{R}^n\setminus F)=\varnothing.
+$$
+
+Thus the original open cover of $F$ has a finite subcover. Therefore, $F$ is compact.
+\end{proof}
+
+\begin{prop}{Closed and bounded subsets of $\mathbb{R}^n$ are compact}{closed-bounded-compact}
+Let $K\subset\mathbb{R}^n$ be closed and bounded. Then $K$ is compact.
+\end{prop}
+
+\begin{proof}
+Since $K$ is bounded, there exists $M>0$ such that
+$$
+K\subset B_M(0).
+$$
+
+In particular,
+$$
+K\subset [-M,M]^n.
+$$
+
+By Lemma~\ref{lem:closed-box-compact}, the closed box
+$$
+[-M,M]^n
+$$
+is compact.
+
+Since $K$ is closed in $\mathbb{R}^n$ and
+$$
+K\subset [-M,M]^n,
+$$
+Proposition~\ref{prop:closed-subset-compact} implies that $K$ is compact.
+
+Therefore, every closed and bounded subset of $\mathbb{R}^n$ is compact.
+\end{proof}
+
+\begin{thm}{Heine-Borel Theorem}{heine-borel}
+Let $K\subset\mathbb{R}^n$. Then $K$ is compact if and only if $K$ is closed and bounded.
+\end{thm}
+
+\begin{proof}
+We prove both directions.
+
+\medskip
+
+\noindent \textbf{$\Longleftarrow$: closed and bounded implies compact.}
+
+Assume that $K$ is closed and bounded. By Proposition~\ref{prop:closed-bounded-compact}, $K$ is compact.
+
+\medskip
+
+\noindent \textbf{$\Longrightarrow$: compact implies closed and bounded.}
+
+Assume that $K$ is compact. By Proposition~\ref{prop:compact-subset-rn-bounded}, $K$ is bounded. By Proposition~\ref{prop:compact-subset-rn-closed}, $K$ is closed.
+
+Therefore, $K$ is closed and bounded.
+
+Combining the two directions, we conclude that
+$$
+K\subset\mathbb{R}^n \text{ is compact}
+\quad\Longleftrightarrow\quad
+K \text{ is closed and bounded}.
+$$
+\end{proof}
+
+\subsubsection*{Logic Chain of the proof of the HBT}
+$$
+\boxed{
+\begin{gathered}
+\text{Supremum Axiom}
+\\[0.6em]
+\Downarrow\rlap{\quad \ref{lem:nested-intervals}}
+\\[0.6em]
+\text{Nested Intervals Theorem}
+\\[0.6em]
+\Downarrow\rlap{\quad \ref{lem:closed-box-compact}}
+\\[0.6em]
+\text{Closed boxes in }\mathbb{R}^n\text{ are compact}
+\\[0.6em]
+\Downarrow\rlap{\quad \ref{prop:closed-subset-compact}}
+\\[0.6em]
+\text{Closed subsets of compact sets are compact}
+\\[0.6em]
+\Downarrow\rlap{\quad \ref{prop:closed-bounded-compact}}
+\\[0.6em]
+\text{Closed and bounded subsets of }\mathbb{R}^n\text{ are compact}
+\end{gathered}
+}
+$$
+
+The converse direction is proved separately:
+$$
+\boxed{
+\begin{gathered}
+K\subset\mathbb{R}^n \text{ is compact}
+\\[0.6em]
+\Downarrow\rlap{\quad \ref{prop:compact-subset-rn-bounded} and \ref{prop:compact-subset-rn-closed}}
+\\[0.6em]
+\quad \qquad K \text{ is closed and bounded} \qquad \quad
+\end{gathered}
+}
+$$
+where the closedness is proved by separating each point outside $K$ from $K$ using finitely many neighborhoods.
+
+\end{document}
