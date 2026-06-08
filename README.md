@@ -1,4 +1,5 @@
 # Mathematics-Notes
+
 A collection of StarbryOwO's mathematics notes.
 
 ## List of Available Notes
